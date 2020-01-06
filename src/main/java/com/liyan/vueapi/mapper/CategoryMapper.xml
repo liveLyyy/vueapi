@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liyan.vueapi.mapper.CategoryMapper">
+
+    <resultMap id="categoryMap" type="com.liyan.vueapi.pojo.Category">
+        <id property="cid" column="cid" javaType="int"/>
+        <result property="cname" column="cname" javaType="string"/>
+        <result property="createTime" column="create_time" javaType="Date"/>
+        <result property="sort" column="sort" javaType="int"/>
+    </resultMap>
+    <select id="findByCatetoryAll" resultMap="categoryMap">
+        select *
+        from category
+        <where>
+            <if test="cname != null and cname != ''">
+                and cname like CONCAT(CONCAT('%',#{cname,jdbcType=VARCHAR}),'%')
+            </if>
+        </where>
+        order by sort
+    </select>
+
+    <select id="findAllCatetory" resultMap="categoryMap">
+        select * from category
+    </select>
+
+    <insert id="insertCatetory" parameterType="Category">
+        insert into category(cname,create_time,sort) values (#{cname},#{createTime},#{sort})
+    </insert>
+
+    <select id="findByIdCategory" resultType="Category" parameterType="int">
+        select * from category where cid=#{cid}
+    </select>
+
+    <update id="updateByIdCategory" parameterType="Category" >
+        update category set  cname=#{category.cname},sort=#{category.sort}
+        where cid=#{category.cid}
+    </update>
+
+    <delete id="deleteByIdCategory" parameterType="Category">
+        delete from category where cid=#{cid}
+    </delete>
+</mapper>

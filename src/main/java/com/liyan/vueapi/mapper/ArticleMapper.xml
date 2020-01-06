@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liyan.vueapi.mapper.ArticleMapper">
+
+    <resultMap id="articleMap" type="com.liyan.vueapi.pojo.Article">
+        <id column="a_id" property="aId" javaType="int"/>
+        <result column="u_id" property="uId" javaType="int"/>
+        <result column="c_id" property="cId" javaType="int"/>
+        <result column="title" property="title" javaType="string"/>
+        <result column="desc" property="desc" javaType="string"/>
+        <result column="content" property="content" javaType="string"/>
+        <result column="likes" property="likes" javaType="int"/>
+        <result column="views" property="views" javaType="int"/>
+        <result column="is_top" property="isTop" javaType="int"/>
+        <result column="create_time" property="createTime" javaType="Date"/>
+        <result column="update_time" property="updateTime" javaType="Date"/>
+        <association property="user" javaType="com.liyan.vueapi.pojo.User">
+            <id property="id" column="id" javaType="int"/>
+            <result property="rid" column="rid" javaType="int"/>
+            <result property="username" javaType="string" column="username"/>
+            <result property="password" javaType="string" column="password"/>
+            <result property="phone" javaType="string" column="phone"/>
+            <result property="email" javaType="string" column="email"/>
+            <result property="token" javaType="string" column="token"/>
+        </association>
+        <association property="category" javaType="com.liyan.vueapi.pojo.Category">
+            <id property="cid" column="cid" javaType="int"/>
+            <result property="cname" column="cname" javaType="string"/>
+            <result property="createTime" column="create_time" javaType="Date"/>
+            <result property="sort" column="sort" javaType="int"/>
+        </association>
+    </resultMap>
+
+    <select id="findArticle" resultMap="articleMap" parameterType="Article">
+        select a.*,u.username,c.cid,c.cname
+        from article a
+        inner join user u on u.id=a.u_id
+        left outer join category c on c.cid=a.c_id
+        <where>
+            <if test="title != null and title != ''">
+                and a.title like CONCAT(CONCAT('%',#{title,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="descs != null and descs != ''">
+                and a.descs like CONCAT(CONCAT('%',#{descs,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="create_time != null and create_time != ''">
+                and a.create_time like CONCAT(CONCAT('%',#{createTime,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="username != null and username != ''">
+                and u.username like CONCAT(CONCAT('%',#{username,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="create_time != null and create_time != ''">
+                and c.cname like CONCAT(CONCAT('%',#{cname,jdbcType=VARCHAR}),'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="inseerArticle" parameterType="Article">
+      INSERT INTO article VALUES(#{article.uId},DEFAULT,#{article.cId},#{article.title},#{article.desc},#{article.content},DEFAULT,DEFAULT,#{article.isTop},#{article.createTime},DEFAULT);
+    </insert>
+
+</mapper>

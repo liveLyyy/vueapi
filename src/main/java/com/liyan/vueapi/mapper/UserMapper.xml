@@ -1,0 +1,63 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liyan.vueapi.mapper.UserMapper">
+    <resultMap id="usermap" type="user">
+        <id property="id" column="id" javaType="int"/>
+        <result property="rid" column="rid" javaType="int"/>
+        <result property="username" javaType="string" column="username"/>
+        <result property="password" javaType="string" column="password"/>
+        <result property="phone" javaType="string" column="phone"/>
+        <result property="email" javaType="string" column="email"/>
+        <association property="role" javaType="com.liyan.vueapi.pojo.Role">
+            <id column="rid" property="rid"/>
+            <result column="rolename" property="rolename"/>
+        </association>
+    </resultMap>
+
+
+    <select id="Login" parameterType="User" resultType="User">
+        select id,username,phone,email
+        from user
+        where username=#{username} and password=#{password}
+    </select>
+
+    <select id="findUser" resultMap="usermap">
+        select u.*,r.*
+        from user u
+        join role r
+        on u.rid=r.rid
+        <where>
+            <if test="username != null and username != ''">
+                and u.username like CONCAT(CONCAT('%',#{username,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and u.phone like CONCAT(CONCAT('%',#{phone,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="email != null and email != ''">
+                and u.email like CONCAT(CONCAT('%',#{email,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="rolename != null and rolename != ''">
+                and r.rolename like CONCAT(CONCAT('%',#{rolename,jdbcType=VARCHAR}),'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into user(rid,username,password,phone,email) values
+        (#{user.rid},#{user.username},#{user.password},#{user.phone},#{user.email})
+    </insert>
+
+    <select id="findById" resultType="User">
+        select id,rid,username,phone,email from user where id=#{id}
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        update user set phone=#{user.phone},email=#{user.email}
+        where id=#{user.id}
+    </update>
+
+    <delete id="deleteByIdUser" parameterType="User">
+        delete from user where id=#{id}
+    </delete>
+
+
+</mapper>
