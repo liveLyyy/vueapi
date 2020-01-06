@@ -35,4 +35,14 @@ public class ArticleServiceImpl implements ArticleService {
         Article article=new Article(uid,cid,title,desc,content,isTop,createTime);
         return articleMapper.inseerArticle(article);
     }
+
+    @Override
+    public Article findByIdArticle(Integer aId) throws Exception {
+        return articleMapper.findByIdArticle(aId);
+    }
+
+    @Override
+    public int deleteByIdArticle(Integer aId) throws Exception {
+        return articleMapper.deleteByIdArticle(aId);
+    }
 }

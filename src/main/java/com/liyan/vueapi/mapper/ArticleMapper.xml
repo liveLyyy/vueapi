@@ -61,4 +61,16 @@
       INSERT INTO article VALUES(#{article.uId},DEFAULT,#{article.cId},#{article.title},#{article.desc},#{article.content},DEFAULT,DEFAULT,#{article.isTop},#{article.createTime},DEFAULT);
     </insert>
 
+    <select id="findByIdArticle" resultMap="articleMap" parameterType="int">
+        SELECT a.*,u.username,c.cname
+        FROM article a
+        inner join user u on u.id=a.u_id
+        left outer join category c on c.cid=a.c_id
+        WHERE a.a_id=#{aId}
+    </select>
+
+    <delete id="deleteByIdArticle" parameterType="int">
+        DELETE FROM article WHERE a_id=#{aId}
+    </delete>
+
 </mapper>

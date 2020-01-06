@@ -1,5 +1,6 @@
 package com.liyan.vueapi.controller;
 
+import com.alibaba.druid.wall.WallSQLException;
 import com.github.pagehelper.PageInfo;
 import com.liyan.vueapi.enums.ResultCode;
 import com.liyan.vueapi.pojo.Article;
@@ -46,7 +47,24 @@ public class ArticleController {
            return Result.success(ResultCode.SUCCESS,"发布文章成功");
        }
        return  Result.failure(ResultCode.FAILURE,"发布文章失败");
+    }
 
+    @GetMapping("/sys/findByIdArticle/{aId}")
+    public Result findByIdArticle(@PathVariable Integer aId) throws Exception {
+        Article article=articleService.findByIdArticle(aId);
+        if (null != article){
+            return Result.success(article);
+        }
+        return Result.failure(ResultCode.FAILURE,"根据ID查询文章失败");
+    }
+
+    @DeleteMapping("/sys/deleteByIdArticle/{aId}")
+    public Result deleteByIdArticle(@PathVariable Integer aId)throws Exception{
+        int index=articleService.deleteByIdArticle(aId);
+        if (0 != index){
+            return Result.success(ResultCode.SUCCESS);
+        }
+        return Result.failure(ResultCode.FAILURE,"根据ID删除文章失败");
     }
 
 

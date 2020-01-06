@@ -15,4 +15,8 @@ public interface ArticleMapper {
    List<Article> findArticle(Map<String, Object> map) throws Exception;
 
    int inseerArticle(@Param("article") Article article)throws Exception;
+
+   Article findByIdArticle(Integer aId) throws Exception;
+
+   int deleteByIdArticle(Integer aId) throws Exception;
 }

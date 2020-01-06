@@ -15,4 +15,8 @@ public interface ArticleService {
     PageInfo<Article> findArticle(Integer pageCount, Integer pageSize, String title, String desc, Date createTime,String username,String cname) throws Exception;
 
     int addArticle(Integer uid,Integer cid,String title, String desc, String content,Integer isTop,Date createTime)throws Exception;
+
+    Article findByIdArticle(Integer aId) throws Exception;
+
+    int deleteByIdArticle(Integer aId) throws Exception;
 }
