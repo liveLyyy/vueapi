@@ -18,7 +18,10 @@ public class MenuController {
     @Autowired
     private MenuServiceImpl menuService;
 
-    @GetMapping("/sys/getMenu")
+    /*
+    侧边栏显示查询
+     */
+    @GetMapping("/sys/menu")
     public Result getMenu() {
         List<Menu> list = menuService.findMenu();
         MenuTree menuTree = new MenuTree(list);
@@ -29,6 +32,9 @@ public class MenuController {
             return Result.failure(ResultCode.DATA_IS_WRONG);
         }
     }
+    /*
+    查询所有菜单
+     */
     @GetMapping("/sys/right")
     public Result getMenus() {
         List<Menu> list = menuService.findMenu();

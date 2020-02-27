@@ -3,11 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liyan.vueapi.mapper.MenuMapper">
-
-
-
     <select id="findMenu" resultType="Menu">
         select * from menu
     </select>
-
 </mapper>

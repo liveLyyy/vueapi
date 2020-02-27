@@ -9,7 +9,7 @@
         <result column="u_id" property="uId" javaType="int"/>
         <result column="c_id" property="cId" javaType="int"/>
         <result column="title" property="title" javaType="string"/>
-        <result column="desc" property="desc" javaType="string"/>
+        <result column="descs" property="descs" javaType="string"/>
         <result column="content" property="content" javaType="string"/>
         <result column="likes" property="likes" javaType="int"/>
         <result column="views" property="views" javaType="int"/>
@@ -58,7 +58,7 @@
     </select>
 
     <insert id="inseerArticle" parameterType="Article">
-      INSERT INTO article VALUES(#{article.uId},DEFAULT,#{article.cId},#{article.title},#{article.desc},#{article.content},DEFAULT,DEFAULT,#{article.isTop},#{article.createTime},DEFAULT);
+      INSERT INTO article VALUES(#{article.uId},DEFAULT,#{article.cId},#{article.title},#{article.descs},#{article.content},DEFAULT,DEFAULT,#{article.isTop},#{article.createTime},DEFAULT);
     </insert>
 
     <select id="findByIdArticle" resultMap="articleMap" parameterType="int">
@@ -72,5 +72,28 @@
     <delete id="deleteByIdArticle" parameterType="int">
         DELETE FROM article WHERE a_id=#{aId}
     </delete>
+
+<!--    <update id="updateArticle" parameterType="Article">-->
+<!--        UPDATE article-->
+<!--        <trim prefix="set" suffixOverrides=",">-->
+<!--            <if test="cId != null">c_id=#{cId}</if>-->
+<!--            <if test="title != null">title=#{title}</if>-->
+<!--            <if test="desc != null">desc=#{desc}</if>-->
+<!--            <if test="content != null">content=#{content}</if>-->
+<!--            <if test="isTop != null">is_top=#{isTop}</if>-->
+<!--            <if test="updateTime != null">update_time=#{updateTime}</if>-->
+<!--        </trim>-->
+<!--        WHERE a_id=#{aId}-->
+<!--    </update>-->
+    <update id="updateArticle" parameterType="Article">
+       UPDATE article
+        SET c_id=#{article.cId},
+        title=#{article.title},
+        descs=#{article.descs},
+        content=#{article.content},
+        is_top=#{article.isTop},
+        update_time=#{article.updateTime}
+       WHERE a_id=#{article.aId}
+    </update>
 
 </mapper>

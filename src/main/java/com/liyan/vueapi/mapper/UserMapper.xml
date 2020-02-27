@@ -42,8 +42,8 @@
     </select>
 
     <insert id="insertUser" parameterType="User">
-        insert into user(rid,username,password,phone,email) values
-        (#{user.rid},#{user.username},#{user.password},#{user.phone},#{user.email})
+        insert into user(username,password,phone,email) values
+        (#{user.username},#{user.password},#{user.phone},#{user.email})
     </insert>
 
     <select id="findById" resultType="User">

@@ -23,7 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
         PageHelper.startPage(pageCount,pageSize);
         Map<String,Object> map=new HashMap<>();
         map.put("title",title);
-        map.put("desc",desc);
+        map.put("descs",desc);
         map.put("createTime",createTime);
         List<Article> list=articleMapper.findArticle(map);
         PageInfo<Article> pageInfo=new PageInfo<>(list);
@@ -44,5 +44,18 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int deleteByIdArticle(Integer aId) throws Exception {
         return articleMapper.deleteByIdArticle(aId);
+    }
+
+    @Override
+    public int updateArticle(Integer aId,Integer cId,String title, String desc, String content, Integer isTop,Date updateTime) throws Exception {
+        Article article=new Article();
+        article.setaId(aId);
+        article.setcId(cId);
+        article.setTitle(title);
+        article.setDescs(desc);
+        article.setContent(content);
+        article.setIsTop(isTop);
+        article.setUpdateTime(updateTime);
+        return articleMapper.updateArticle(article);
     }
 }

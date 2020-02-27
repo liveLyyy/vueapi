@@ -9,7 +9,7 @@ public class Article {
     private Integer aId;
     private Integer cId;
     private String title;
-    private String desc;
+    private String descs;
     private String content;
     private Integer likes;
     private Integer views;
@@ -21,11 +21,11 @@ public class Article {
     private Category category=new Category();
 
 
-    public Article(Integer uId, Integer cId, String title, String desc, String content, int isTop, Date createTime) {
+    public Article(Integer uId, Integer cId, String title, String descs, String content, int isTop, Date createTime) {
         this.uId = uId;
         this.cId = cId;
         this.title = title;
-        this.desc = desc;
+        this.descs = descs;
         this.content = content;
         this.isTop = isTop;
         this.createTime = createTime;
@@ -76,12 +76,12 @@ public class Article {
         this.title = title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescs() {
+        return descs;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescs(String descs) {
+        this.descs = descs;
     }
 
     public String getContent() {

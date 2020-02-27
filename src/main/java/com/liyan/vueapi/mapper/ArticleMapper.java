@@ -19,4 +19,6 @@ public interface ArticleMapper {
    Article findByIdArticle(Integer aId) throws Exception;
 
    int deleteByIdArticle(Integer aId) throws Exception;
+
+   int updateArticle( @Param("article")Article article) throws Exception;
 }

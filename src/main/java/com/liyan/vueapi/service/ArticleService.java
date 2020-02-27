@@ -19,4 +19,6 @@ public interface ArticleService {
     Article findByIdArticle(Integer aId) throws Exception;
 
     int deleteByIdArticle(Integer aId) throws Exception;
+
+    int updateArticle(Integer aId,Integer cId,String title, String desc, String content, Integer isTop,Date updateTime)throws Exception;
 }
